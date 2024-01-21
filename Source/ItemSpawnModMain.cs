@@ -165,7 +165,7 @@ namespace ItemSpawnerMod.Source
         private void SpawnItem(string itemID, int quantity)
         {
             if (allInGameItems == null || allInGameItems.Count < 1) return;
-            BI item = allInGameItems.Find(x => x.ID == itemID);
+            BI item = allInGameItems.Find(x => x.ID.ToLower().Contains(itemID.ToLower()));
             if (item == null) return;
             Main instance = AlmostSingleton<Main>.Instance;
             if (instance == null) return;
