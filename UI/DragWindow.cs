@@ -56,7 +56,6 @@ namespace ItemSpawnerUnity
 
         private void OnDestroy()
         {
-            Console.WriteLine("DragWindow.OnDestroy()");
             isDragging = false;
             offset = Vector2.zero;
             windowTransform = null;

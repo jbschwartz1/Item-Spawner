@@ -61,7 +61,6 @@ namespace ItemSpawnerUnity
 
         public void OnDestroy()
         {
-            Console.WriteLine("ConfigurationManager.OnDestroy()");
             userPrefferredKeyCodeOne = null;
             userPrefferredKeyCodeTwo = null;
             lastPanelLocation = null;

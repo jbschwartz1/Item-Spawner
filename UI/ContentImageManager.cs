@@ -211,7 +211,6 @@ namespace ItemSpawnerUnity
 
         private void OnDestroy()
         {
-            Console.WriteLine("ContentImageManager.OnDestroy()");
             weedCategory = null;
             suppliesCategory = null;
             equipmentCategory = null;

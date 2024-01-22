@@ -17,7 +17,6 @@ namespace ItemSpawnerUnity
 
         private void OnDestroy()
         {
-            Console.WriteLine("ClosePanel.OnDestroy()");
             Destroy(this);
         }
     }

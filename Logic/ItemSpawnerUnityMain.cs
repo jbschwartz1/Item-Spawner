@@ -33,6 +33,8 @@ namespace ItemSpawnerUnity
         private MethodInfo showMouse;
         private MethodInfo setOverlayIndex;
 
+        private object mouseInstance;
+
         private bool showPanel = false;
         public bool ShowPanel
         {
@@ -118,7 +120,7 @@ namespace ItemSpawnerUnity
 
         private void Update()
         {
-            if (configurationManager == null) return;
+            if (configurationManager == null || panelPrefab == null) return;
 
             bool keyActivated = (Input.GetKeyUp(UserPreferredKeyCodeOne) && UserPreferredKeyCodeTwo == KeyCode.None) ||
                 (Input.GetKey(UserPreferredKeyCodeOne) && Input.GetKeyUp(UserPreferredKeyCodeTwo));
@@ -153,7 +155,7 @@ namespace ItemSpawnerUnity
 
         private void LateUpdate()
         {
-            if (cashCircle == null || cashText == null || cashEditing) return;
+            if (panelPrefab == null || cashCircle == null || cashText == null || cashEditing) return;
 
             if (showPanel && Input.GetMouseButtonDown(LEFT_CLICK) && playerPointer != null)
             {
@@ -161,7 +163,6 @@ namespace ItemSpawnerUnity
                 if (cashCircleDistanceToCursor < MAX_DISTANCE_TO_CASH_CIRCLE)
                 {
                     StartCoroutine(ReadInputCash(cashText));
-                    Console.WriteLine("Cash Editing!");
                 }
             }
 
@@ -292,7 +293,6 @@ namespace ItemSpawnerUnity
                 timer += Time.deltaTime;
                 yield return null;
             }
-            Console.WriteLine("Dots Cleared!");
         }
 
         private void ManageKeyPress()
@@ -381,24 +381,33 @@ namespace ItemSpawnerUnity
             if (showPanel)
             {
                 if (panelObject == null || panelObject.activeSelf) return;
-                setOverlayIndex.Invoke(inventoryComponent, new object[] { NEGATIVE_ONE });
-                overlayManager.SetActive(false);
-                panelObject.SetActive(true);
+                ChangeOverlayState(false);
                 ShowMouse(true);
                 Console.WriteLine("Opening Panel!");
             }
             else
             {
                 if (panelObject == null || !panelObject.activeSelf) return;
-                overlayManager.SetActive(true);
-                panelObject.SetActive(false);
+                ChangeOverlayState(true);
                 ShowMouse(false);
-                KeybindManager.Instance.CapturingKeybind = false;
-                KeybindManager.Instance.OptionsPanel.SetActive(false);
-                DragWindow.Instance.UpdatePanelPosition();
+                UpdatePanelPositionAndKeybinds();
                 Console.WriteLine("Closing Panel!");
             }
 
+        }
+
+        private void ChangeOverlayState(bool state)
+        {
+            if (!state) setOverlayIndex.Invoke(inventoryComponent, new object[] { NEGATIVE_ONE });
+            overlayManager.SetActive(state);
+            panelObject.SetActive(!state);
+        }
+
+        private void UpdatePanelPositionAndKeybinds()
+        {
+            KeybindManager.Instance.CapturingKeybind = false;
+            KeybindManager.Instance.OptionsPanel.SetActive(false);
+            DragWindow.Instance.UpdatePanelPosition();
         }
 
         private void CheckPanelInitilization()
@@ -417,14 +426,13 @@ namespace ItemSpawnerUnity
                 Console.WriteLine("ShowMouse not found!");
                 return;
             }
-            object mouseInstance = ItemSpawnerUnityUtilities.Instance.GetComponentOfType("MouseCanvas", "MouseController");
-            showMouse.Invoke(mouseInstance, new object[] { "Menu", show });
+            mouseInstance = mouseInstance == null ?  Utilities.GetComponentOfType("MouseCanvas", "MouseController") : mouseInstance;
+            if (PlayerPointer.activeSelf != show) showMouse.Invoke(mouseInstance, new object[] { "Menu", show });
             setActiveObject.SetActive(!show);
         }
 
         public void OnDestroy()
         {
-            Console.WriteLine("Destroying ItemSpawnerUnityMain!");
             configurationManager = null;
             showMouse = null;
             panelPrefab = null;

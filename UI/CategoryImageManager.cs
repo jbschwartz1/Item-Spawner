@@ -207,7 +207,6 @@ namespace ItemSpawnerUnity
 
         public void OnDestroy()
         {
-            Console.WriteLine("CategoryImageManager.OnDestroy()");
             RemoveClickListeners();
             imageDictionary.Clear();
             imageDictionary = null;
