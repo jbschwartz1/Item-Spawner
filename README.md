@@ -104,12 +104,6 @@ Spawn any Item in Weed Shop 3
 |Boosters      |Quality Boost Hardcore             |
 |Healers       |Anti Russet Mite Regular           |
 |Healers       |Anti Russet Mite Hardcore          |
-|Joints        |Crappy OG Kush Doobie              |
-|Joints        |Purple Haze Joint                  |
-|Joints        |Hindu Kush Blunt                   |
-|Joints        |Blueberry Cross Joint              |
-|Joints        |Sour Diesel Crackwoods Blunt       |
-|Joints        |Romulan Dolla Joint                |
 |Joints        |Doobie Papers                      |
 |Joints        |Joint Papers                       |
 |Joints        |Blunt Papers                       |
@@ -278,7 +272,6 @@ Spawn any Item in Weed Shop 3
 |Decorative    |Toke'Em Pole 1                     |
 |Decorative    |Toke'Em Pole 2                     |
 |Decorative    |Toke'Em Pole 3                     |
-|Joints        |Candy Cane Blunt                   |
 |Bongs         |Candy Cane Bong                    |
 |Bongs         |Jack Frost Bong                    |
 |Decorative    |Kushmas Poster                     |
