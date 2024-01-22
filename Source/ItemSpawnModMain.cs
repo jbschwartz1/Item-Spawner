@@ -36,7 +36,7 @@ namespace ItemSpawnerMod.Source
                 { "Indica", item => AddToCategory(item, ContentImageManager.weedCategory, null, null) },
                 { "Hybrid", item => AddToCategory(item, ContentImageManager.weedCategory, null, null) },
                 { "Danja", item => AddToCategory(item, ContentImageManager.weedCategory, null, null) },
-                { "Concentrates", item => AddToCategory(item, ContentImageManager.suppliesCategory, null, null) },
+                { "Concentrates", item => AddToCategory(item, tempDictionary, null, null) },
                 { "Bongs", item => AddToCategory(item, ContentImageManager.merchCategory, null, null) },
                 { "Allen Bongs", item => AddToCategory(item, ContentImageManager.merchCategory, null, null) },
                 { "Allen Counters", item => AddToCategory(item, ContentImageManager.furnitureCategory, null, null) },
@@ -62,13 +62,13 @@ namespace ItemSpawnerMod.Source
                 { "Production", item => AddToCategory(item, ContentImageManager.suppliesCategory, null, null) },
                 { "Setups", item => AddToCategory(item, ContentImageManager.componentCategory, null, null) },
                 { "Storage", item => AddToCategory(item, ContentImageManager.equipmentCategory, null, null) },
-                { "Vapes", item => AddToCategory(item, ContentImageManager.suppliesCategory, null, null) },
+                { "Vapes", item => AddToCategory(item, ContentImageManager.merchCategory, null, null) },
                 { "Delivery", item => AddToCategory(item, ContentImageManager.toolCategory, null, null) },
                 { "Ventilation", item => AddToCategory(item, ContentImageManager.componentCategory, null, null) },
                 { "Water", item => AddToCategory(item, ContentImageManager.componentCategory, null, null) },
-                { "Workstations", item => AddToCategory(item, ContentImageManager.furnitureCategory, ContentImageManager.equipmentCategory, "Smart TV,Poster") },
+                { "Workstations", item => AddToCategory(item, ContentImageManager.equipmentCategory, ContentImageManager.equipmentCategory, "Smart TV,Poster") },
                 { "Dildos", item => AddToCategory(item, ContentImageManager.merchCategory, null, null) },
-                { "Joints", item => AddToCategory(item, ContentImageManager.suppliesCategory, tempDictionary, "Papers,Pack") },
+                { "Joints", item => AddToCategory(item, ContentImageManager.merchCategory, tempDictionary, "Papers,Pack") },
                 { "Lights", item => AddToCategory(item, ContentImageManager.furnitureCategory, ContentImageManager.componentCategory, "Floor,Wall,Garden,Post,Orb,Flood") },
                 { "Breeders", item => AddToCategory(item, ContentImageManager.equipmentCategory, ContentImageManager.suppliesCategory, "Semi-Auto Crossbreeding Pod,Manual xBreeding Pod,Auto Crossbreeding Pod") },
                 { "Trash N Shit", item => AddToCategory(item, null,  ContentImageManager.toolCategory, "Trash") },
@@ -148,8 +148,14 @@ namespace ItemSpawnerMod.Source
         private void AddJointsAtEndOfProcessing()
         {
             if (tempDictionary == null || tempDictionary.Count < 1) return;
+            /* The duplicateJoints are Joints that show up in the tempDictionary twice. EG Joint 0 is Crappy OG Kush Doobie, but
+             also has Joint 0_Indica 1 is also Crappy OG Kush Doobie. XmasJoint is XmasJoint_Sativa CC for Candy Cane Blunt. */
+            /*Crappy OG Kush Doobie, Purple Haze Joint, Hindu Kush Blunt, Blueberry Cross Joint, Sour Diesel Crackwoods Blunt,
+             Romulan Dolla Joint and Candy Cane Blunt (respectively to Joint 0, 1, 2, etc.. */
+            string[] duplicateJoints = [ "Joint 0", "Joint 1", "Joint 2", "Joint 3", "Joint 4", "Joint 5", "XmasJoint" ];
             foreach (KeyValuePair<BTuple, Sprite> entry in tempDictionary)
             {
+                if (duplicateJoints.Contains(entry.Key.Item1)) continue;
                 AddToDictionary(entry.Key.Item1, entry.Key.Item2, entry.Value, ContentImageManager.weedCategory);
             }
         }
