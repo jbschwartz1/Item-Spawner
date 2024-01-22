@@ -1,8 +1,6 @@
 # Item-Spawner
 Spawn any Item in Weed Shop 3
 
-
-Items:
 |Category      |Item Name                          |
 |--------------|-----------------------------------|
 |Sativa        |The 420 Special                    |
