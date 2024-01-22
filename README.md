@@ -3,8 +3,9 @@ Spawn any Item in Weed Shop 3
 
 
 Items:
-|Sativa        |The 420 Special                    |
+|Category      |Item Name                          |
 |--------------|-----------------------------------|
+|Sativa        |The 420 Special                    |
 |Indica        |OG Kush                            |
 |Indica        |White Widow                        |
 |Indica        |Northern Lights                    |
