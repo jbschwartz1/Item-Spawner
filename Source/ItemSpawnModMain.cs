@@ -7,9 +7,11 @@ using System;
 using System.Collections.Generic;
 using BTuple = System.Tuple<string, string>;
 using System.Linq;
+using SickscoreGames.HUDNavigationSystem;
 
 namespace ItemSpawnerMod.Source
 {
+    [BepInDependency(PluginInfo.CONFIGURATION_MANAGER, BepInDependency.DependencyFlags.HardDependency)]
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     public class ItemSpawnModMain : BaseUnityPlugin
     {
@@ -170,12 +172,14 @@ namespace ItemSpawnerMod.Source
         }
         private void SpawnItem(string itemID, int quantity)
         {
+            ConfigurationManager.Instance.ReloadFile();
+            int quantityModifier = Mathf.Clamp(ConfigurationManager.Instance.UserPrefferredQuantityModifier, 1, 1000);
             if (allInGameItems == null || allInGameItems.Count < 1) return;
             BI item = allInGameItems.Find(x => x.ID.ToLower().Equals(itemID.ToLower()));
             if (item == null) return;
             Main instance = AlmostSingleton<Main>.Instance;
             if (instance == null) return;
-            instance.Inventory.Add(item, 100, quantity);
+            instance.Inventory.Add(item, 100, quantity * quantityModifier);
         }
         private void SetCash (int cash)
         {
