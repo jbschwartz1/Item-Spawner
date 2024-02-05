@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using BTuple = System.Tuple<string, string>;
 using System.Linq;
-using SickscoreGames.HUDNavigationSystem;
 
 namespace ItemSpawnerMod.Source
 {
