@@ -16,6 +16,8 @@ namespace ItemSpawnerUnity
 
         private ConfigEntry<Vector2> lastPanelLocation;
 
+        private ConfigEntry<int> userPrefferredQuantityModifier;
+
         public string UserPreferredKeyCodeOne
         {
             get => userPrefferredKeyCodeOne.Value;
@@ -25,6 +27,11 @@ namespace ItemSpawnerUnity
         {
             get => userPrefferredKeyCodeTwo.Value;
             set => userPrefferredKeyCodeTwo.Value = value;
+        }
+        public int UserPrefferredQuantityModifier
+        {
+            get => userPrefferredQuantityModifier.Value;
+            set => userPrefferredQuantityModifier.Value = value;
         }
 
         public Vector2 LastPanelLocation
@@ -43,6 +50,14 @@ namespace ItemSpawnerUnity
         {
             instance = this;
 
+            userPrefferredQuantityModifier = Config.Bind("Quantity Modifier",
+             "QuantityModifier",
+             1,
+             "The Default Item Spawner allows you to spawn 1, 5, 10, 25, 50, and 100 items.\n" +
+             "This modifier multiplies the default value by the multiplier.\n" +
+             "For example, if the multiplier is 10, clicking 100 will spawn 1000 items.\n" +
+             "This will be clamped to a range of 1 through 1000.");
+
             userPrefferredKeyCodeOne = Config.Bind("Key Bind One",
              "KeyBindOne",
              "LeftControl",
@@ -57,6 +72,11 @@ namespace ItemSpawnerUnity
               "LastPanelLocation",
               Vector2.zero,
               "DO NOT MANUALLY CHANGE.");
+        }
+
+        public void ReloadFile()
+        {
+            Config.Reload();
         }
 
         public void OnDestroy()
